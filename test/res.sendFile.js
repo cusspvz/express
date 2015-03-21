@@ -334,13 +334,15 @@ describe('res', function(){
       test.expect(200, cb);
     })
 
-    it('should invoke the callback when client already aborted', function (done) {
+    it.only('should invoke the callback when client already aborted', function (done) {
       var cb = after(1, done);
       var app = express();
 
       app.use(function (req, res) {
         onFinished(res, function () {
           res.sendfile('test/fixtures/name.txt', function (err) {
+            console.log(err);
+            
             should(err).be.ok;
             err.code.should.equal('ECONNABORT');
             cb();
